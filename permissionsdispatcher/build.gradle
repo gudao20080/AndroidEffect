@@ -37,8 +37,8 @@ dependencies {
     implementation "com.android.support:appcompat-v7:$supportVersion"
     implementation "com.android.support:design:$supportVersion"
     implementation "com.android.support:recyclerview-v7:$supportVersion"
-    implementation ('com.github.bumptech.glide:glide:4.4.0'){
-        exclude group:'com.android.support'
+    implementation('com.github.bumptech.glide:glide:4.4.0') {
+        exclude group: 'com.android.support'
     }
     kapt 'com.github.bumptech.glide:compiler:4.4.0'
 
@@ -49,4 +49,6 @@ dependencies {
     }
     kapt "com.github.hotchemi:permissionsdispatcher-processor:2.1.0"
     implementation 'com.lzy.widget:imagepicker:0.6.1'
+    implementation dependLibs.BaseRecyclerViewAdapterHelper
+    implementation dependLibs.FlycoTabLayout
 }

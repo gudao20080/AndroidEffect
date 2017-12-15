@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:id="@+id/wholeView"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content"
+                                             android:minHeight="?attr/actionBarSize"
+                                             tools:background="@drawable/dc_fb_header_bg"
+                                             app:layout_scrollFlags="exitUntilCollapsed|scroll|snap"
+
+    >
+
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="@dimen/dc_favorite_image"
+        android:layout_height="@dimen/dc_favorite_image"
+        android:background="@drawable/dc_back"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal_1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline_horizontal_1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="西甲 第27轮"
+        />
+
+
+    <ImageView
+        android:id="@+id/iv_favorite"
+        android:layout_width="@dimen/dc_favorite_image"
+        android:layout_height="@dimen/dc_favorite_image"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/dc_favorite_selected"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline_horizontal_1"
+        app:layout_constraintRight_toLeftOf="@+id/iv_share"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/iv_share"
+        android:layout_width="@dimen/dc_favorite_image"
+        android:layout_height="@dimen/dc_favorite_image"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/dc_share"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline_horizontal_1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <android.support.constraint.Guideline
+
+        android:id="@+id/guideline_horizontal_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_red_dark"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="44dp"/>
+
+
+    <android.support.constraint.Guideline
+
+        android:id="@+id/guideline_horizontal_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_red_dark"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="64dp"/>
+
+
+    <TextView
+        android:id="@+id/tv_match_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/color_ff4b1a"
+        android:textSize="@dimen/dc_fb_header_guess"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/tv_guess_type"
+        app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal_2"
+        android:text="-1周三001"
+        />
+
+    <TextView
+        android:id="@+id/tv_guess_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/color_ff4b1a"
+        android:textSize="@dimen/dc_fb_header_guess"
+        app:layout_constraintLeft_toRightOf="@+id/tv_match_info"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal_2"
+        android:text="竞猜"
+        />
+
+
+    <TextView
+        android:id="@+id/tv_scroll_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/dc_border_common"
+        android:padding="2dp"
+        android:textColor="@color/color_ff4b1a"
+        android:textSize="@dimen/dc_fb_header_guess"
+        app:layout_constraintHeight_min="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_guess_type"
+        android:text="滚球中"
+        />
+
+    <TextView
+        android:id="@+id/tv_host_score"
+        style="@style/dc_fb_header_score"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/score_divider"
+        app:layout_constraintTop_toBottomOf="@+id/tv_scroll_status"
+        android:text="0"
+        android:visibility="visible"/>
+
+    <View
+        android:id="@+id/score_divider"
+        android:layout_width="25dp"
+        android:layout_height="4dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_host_score"
+        app:layout_constraintLeft_toRightOf="@+id/tv_host_score"
+        app:layout_constraintRight_toLeftOf="@+id/tv_guest_score"
+        app:layout_constraintTop_toTopOf="@+id/tv_host_score"
+        />
+
+    <TextView
+        android:id="@+id/tv_guest_score"
+        style="@style/dc_fb_header_score"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_host_score"
+        app:layout_constraintLeft_toRightOf="@+id/score_divider"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="0"
+        android:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/tv_match_current_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dc_fb_header_guess"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_host_score"
+        android:text="上半场 12'"
+        android:visibility="visible"/>
+
+
+    <ImageView
+        android:id="@+id/iv_host"
+        android:layout_width="@dimen/dc_team_icon_width"
+        android:layout_height="@dimen/dc_team_icon_width"
+        android:layout_marginLeft="44dp"
+        android:background="@drawable/team_icon_default"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal_2"/>
+
+    <TextView
+        android:id="@+id/tv_host_name"
+        style="@style/dc_fb_header_team_name"
+        app:layout_constraintLeft_toLeftOf="@+id/iv_host"
+        app:layout_constraintRight_toRightOf="@+id/iv_host"
+        app:layout_constraintTop_toBottomOf="@+id/iv_host"
+        android:text="巴赛罗那那那"/>
+
+    <TextView
+        android:id="@+id/tv_host_rank"
+        style="@style/dc_fb_header_rank"
+        app:layout_constraintLeft_toLeftOf="@+id/iv_host"
+        app:layout_constraintRight_toRightOf="@+id/iv_host"
+        app:layout_constraintTop_toBottomOf="@+id/tv_host_name"
+        android:text="排名:1名"/>
+
+
+    <ImageView
+        android:id="@+id/iv_guest"
+        android:layout_width="@dimen/dc_team_icon_width"
+        android:layout_height="@dimen/dc_team_icon_width"
+        android:layout_marginRight="44dp"
+        android:background="@drawable/team_icon_default"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal_2"/>
+
+    <TextView
+        android:id="@+id/tv_guest_name"
+        style="@style/dc_fb_header_team_name"
+        app:layout_constraintLeft_toLeftOf="@+id/iv_guest"
+        app:layout_constraintRight_toRightOf="@+id/iv_guest"
+        app:layout_constraintTop_toBottomOf="@+id/iv_guest"
+        android:text="皇家马德里"/>
+
+    <TextView
+        android:id="@+id/tv_guest_rank"
+        style="@style/dc_fb_header_rank"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_guest_name"
+        app:layout_constraintRight_toRightOf="@+id/tv_guest_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_host_name"
+
+        android:text="排名:2名"/>
+
+<!--
+    <com.flyco.tablayout.CommonTabLayout
+        android:id="@+id/commonTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:minHeight="42dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_match_current_time"
+        app:tl_divider_color="@color/white"
+        app:tl_indicator_color="@color/color_ff4b1a"
+        app:tl_indicator_gravity="BOTTOM"
+        app:tl_indicator_height="2dp"
+        app:tl_indicator_width="20dp"
+        app:tl_textSelectColor="@color/color_ff4b1a"
+        app:tl_textsize="14sp"
+        ></com.flyco.tablayout.CommonTabLayout>-->
+
+
+
+
+</android.support.constraint.ConstraintLayout>

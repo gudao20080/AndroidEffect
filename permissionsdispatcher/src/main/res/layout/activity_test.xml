@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.wk.permissionsdispatcher.TestActivity">
+
+    <com.wk.permissionsdispatcher.view.MatchHeader
+        android:id="@+id/match_header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dc_fb_header_bg"
+        android:fitsSystemWindows="true"
+
+        android:stateListAnimator="@null">
+
+        <include
+            layout="@layout/fb_match_detail_header"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:background="@color/white"/>
+
+        <com.flyco.tablayout.CommonTabLayout
+            android:id="@+id/commonTabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:minHeight="42dp"
+            app:tl_divider_color="@color/white"
+            app:tl_indicator_color="@color/color_ff4b1a"
+            app:tl_indicator_gravity="BOTTOM"
+            app:tl_indicator_height="2dp"
+            app:tl_indicator_width="20dp"
+            app:tl_textSelectColor="@color/color_ff4b1a"
+            app:tl_textUnselectColor="@color/white"
+            app:tl_textsize="14sp"
+            />
+
+    </com.wk.permissionsdispatcher.view.MatchHeader>
+    >
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+
+</android.support.design.widget.CoordinatorLayout>
+

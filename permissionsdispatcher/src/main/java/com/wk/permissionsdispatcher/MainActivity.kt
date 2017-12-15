@@ -8,7 +8,6 @@ import com.wk.permissionsdispatcher.beans.GlideApp
 import kotterknife.bindView
 import permissions.dispatcher.RuntimePermissions
 
-@RuntimePermissions
 class MainActivity : AppCompatActivity() {
     private val mBtnLoad: Button by bindView(R.id.btn_load)
     private val mIv: ImageView by bindView(R.id.iv)
