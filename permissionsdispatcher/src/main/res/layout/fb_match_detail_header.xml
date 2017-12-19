@@ -6,8 +6,8 @@
                                              android:layout_width="match_parent"
                                              android:layout_height="wrap_content"
                                              android:minHeight="?attr/actionBarSize"
-                                             tools:background="@drawable/dc_fb_header_bg"
                                              app:layout_scrollFlags="exitUntilCollapsed|scroll|snap"
+                                             tools:background="@drawable/dc_fb_header_bg"
 
     >
 
@@ -27,13 +27,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="true"
+        android:text="西甲 第27轮"
         android:textColor="@color/white"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline_horizontal_1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="西甲 第27轮"
         />
 
 
@@ -85,13 +85,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:text="-1周三001"
         android:textColor="@color/color_ff4b1a"
         android:textSize="@dimen/dc_fb_header_guess"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/tv_guess_type"
         app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal_2"
-        android:text="-1周三001"
         />
 
     <TextView
@@ -100,12 +100,12 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="10dp"
+        android:text="竞猜"
         android:textColor="@color/color_ff4b1a"
         android:textSize="@dimen/dc_fb_header_guess"
         app:layout_constraintLeft_toRightOf="@+id/tv_match_info"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal_2"
-        android:text="竞猜"
         />
 
 
@@ -117,24 +117,24 @@
         android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/dc_border_common"
         android:padding="2dp"
+        android:text="滚球中"
         android:textColor="@color/color_ff4b1a"
         android:textSize="@dimen/dc_fb_header_guess"
         app:layout_constraintHeight_min="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_guess_type"
-        android:text="滚球中"
         />
 
     <TextView
         android:id="@+id/tv_host_score"
         style="@style/dc_fb_header_score"
+        android:text="0"
+        android:visibility="visible"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/score_divider"
-        app:layout_constraintTop_toBottomOf="@+id/tv_scroll_status"
-        android:text="0"
-        android:visibility="visible"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_scroll_status"/>
 
     <View
         android:id="@+id/score_divider"
@@ -152,24 +152,26 @@
     <TextView
         android:id="@+id/tv_guest_score"
         style="@style/dc_fb_header_score"
+        android:text="0"
+        android:visibility="visible"
         app:layout_constraintBaseline_toBaselineOf="@+id/tv_host_score"
         app:layout_constraintLeft_toRightOf="@+id/score_divider"
-        app:layout_constraintRight_toRightOf="parent"
-        android:text="0"
-        android:visibility="visible"/>
+        app:layout_constraintRight_toRightOf="parent"/>
 
     <TextView
         android:id="@+id/tv_match_current_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:text="上半场 12'"
         android:textColor="@color/white"
         android:textSize="@dimen/dc_fb_header_guess"
+        android:visibility="visible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_host_score"
-        android:text="上半场 12'"
-        android:visibility="visible"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_host_score"/>
+
+
 
 
     <ImageView
@@ -177,25 +179,25 @@
         android:layout_width="@dimen/dc_team_icon_width"
         android:layout_height="@dimen/dc_team_icon_width"
         android:layout_marginLeft="44dp"
-        android:background="@drawable/team_icon_default"
+        android:background="@drawable/dc_corner_kick"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal_2"/>
 
     <TextView
         android:id="@+id/tv_host_name"
         style="@style/dc_fb_header_team_name"
+        android:text="巴赛罗那那那"
         app:layout_constraintLeft_toLeftOf="@+id/iv_host"
         app:layout_constraintRight_toRightOf="@+id/iv_host"
-        app:layout_constraintTop_toBottomOf="@+id/iv_host"
-        android:text="巴赛罗那那那"/>
+        app:layout_constraintTop_toBottomOf="@+id/iv_host"/>
 
     <TextView
         android:id="@+id/tv_host_rank"
         style="@style/dc_fb_header_rank"
+        android:text="排名:1名"
         app:layout_constraintLeft_toLeftOf="@+id/iv_host"
         app:layout_constraintRight_toRightOf="@+id/iv_host"
-        app:layout_constraintTop_toBottomOf="@+id/tv_host_name"
-        android:text="排名:1名"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_host_name"/>
 
 
     <ImageView
@@ -203,46 +205,44 @@
         android:layout_width="@dimen/dc_team_icon_width"
         android:layout_height="@dimen/dc_team_icon_width"
         android:layout_marginRight="44dp"
-        android:background="@drawable/team_icon_default"
+        android:background="@drawable/dc_corner_kick"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal_2"/>
 
     <TextView
         android:id="@+id/tv_guest_name"
         style="@style/dc_fb_header_team_name"
+        android:text="皇家马德里"
         app:layout_constraintLeft_toLeftOf="@+id/iv_guest"
         app:layout_constraintRight_toRightOf="@+id/iv_guest"
-        app:layout_constraintTop_toBottomOf="@+id/iv_guest"
-        android:text="皇家马德里"/>
+        app:layout_constraintTop_toBottomOf="@+id/iv_guest"/>
 
     <TextView
         android:id="@+id/tv_guest_rank"
         style="@style/dc_fb_header_rank"
+        android:text="排名:2名"
         app:layout_constraintLeft_toLeftOf="@+id/tv_guest_name"
         app:layout_constraintRight_toRightOf="@+id/tv_guest_name"
-        app:layout_constraintTop_toBottomOf="@+id/tv_host_name"
 
-        android:text="排名:2名"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_host_name"/>
 
-<!--
-    <com.flyco.tablayout.CommonTabLayout
-        android:id="@+id/commonTabLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:minHeight="42dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_match_current_time"
-        app:tl_divider_color="@color/white"
-        app:tl_indicator_color="@color/color_ff4b1a"
-        app:tl_indicator_gravity="BOTTOM"
-        app:tl_indicator_height="2dp"
-        app:tl_indicator_width="20dp"
-        app:tl_textSelectColor="@color/color_ff4b1a"
-        app:tl_textsize="14sp"
-        ></com.flyco.tablayout.CommonTabLayout>-->
-
-
+    <!--
+        <com.flyco.tablayout.CommonTabLayout
+            android:id="@+id/commonTabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:minHeight="42dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_match_current_time"
+            app:tl_divider_color="@color/white"
+            app:tl_indicator_color="@color/color_ff4b1a"
+            app:tl_indicator_gravity="BOTTOM"
+            app:tl_indicator_height="2dp"
+            app:tl_indicator_width="20dp"
+            app:tl_textSelectColor="@color/color_ff4b1a"
+            app:tl_textsize="14sp"
+            ></com.flyco.tablayout.CommonTabLayout>-->
 
 
 </android.support.constraint.ConstraintLayout>

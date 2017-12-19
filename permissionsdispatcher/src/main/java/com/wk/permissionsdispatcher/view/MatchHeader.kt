@@ -1,20 +1,22 @@
 package com.wk.permissionsdispatcher.view
 
+import android.animation.TypeEvaluator
 import android.content.Context
 import android.graphics.Path
 import android.graphics.PathMeasure
-import android.graphics.Point
 import android.graphics.PointF
-import android.support.annotation.FloatRange
+import android.graphics.Rect
 import android.support.constraint.ConstraintLayout
 import android.support.design.widget.AppBarLayout
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.blankj.utilcode.util.ConvertUtils
 import com.wk.permissionsdispatcher.R
+import kotlinx.android.synthetic.main.fb_match_detail_header.view.*
+import kotlin.math.abs
 
 /**
  * Created by lifan on 2016/5/18.
@@ -79,51 +81,164 @@ class MatchHeader(context: Context, attrs: AttributeSet) : AppBarLayout(context,
     }
 
     private val mOriginXY = mutableMapOf<View, PointF>()
-
+    private val mPaths = mutableMapOf<View, Path>()
     private fun initData() {
 
-            mWholeView.post{
+        post {
 
-                (0..(mWholeView.childCount - 1)).forEach {
-                    val childView = mWholeView.getChildAt(it)
-                    mOriginXY[childView] = PointF(childView.x, childView.y)
-                    Log.d("origin", "${childView.javaClass.simpleName}: ${childView.x}, ${childView.y}")
-                }
-
-
-                val path = Path()
-                path.lineTo(mIvHost.x, mIvHost.y)
-                path.lineTo(mIvBack.x + 100, mIvBack.y)
-
-                val pathMeasure = PathMeasure(path, false)
-                pathMeasure.getPosTan()
+            (0..(mWholeView.childCount - 1)).forEach {
+                val childView = mWholeView.getChildAt(it)
+                mOriginXY[childView] = PointF(childView.x, childView.y)
+                Log.d("origin", "${childView.javaClass.simpleName}: ${childView.x}, ${childView.y}")
+            }
 
 
+            //主队图标
+            val originW = mIvHost.width
+            val resultW = ConvertUtils.dp2px(32f)
 
-                val distance = mWholeView.height - mWholeView.minHeight //可偏移的最大距离
-                var rate: Float
-                addOnOffsetChangedListener { appBarLayout, verticalOffset ->
-                    Log.d("way", "appBarH: ${appBarLayout.height}, offset: $verticalOffset, x: ${x}, minHeight: ${mWholeView.minHeight}")
 
-                    rate = verticalOffset*1f / distance * 1f
-                    Log.d("way", "rate: $rate, $verticalOffset, $distance")
+            generateMovePath(mIvBack)
+            generateMovePath(mIvFavorite)
+            generateMovePath(mIvShare)
+            generateMovePath(mIvHost)
+            generateMovePath(mIvGuest)
+            generateMovePath(mTvHostScore)
+            generateMovePath(mTvGuestScore)
+            generateMovePath(mTvMatchCurrentTime)
 
-                    mIvBack.y = mOriginXY[mIvBack]!!.y - verticalOffset
-                    mIvShare.y = mOriginXY[mIvShare]!!.y - verticalOffset
 
-                    doScale(mIvHost, 1f, 0.3f, rate)
+            val distance = mWholeView.height - mWholeView.minHeight //可偏移的最大距离
+            var rate: Float
+            addOnOffsetChangedListener { appBarLayout, verticalOffset ->
+                Log.d("way", "offset: $verticalOffset, x: mWholeViewH${mWholeView.height}, minHeight: ${mWholeView.minHeight}")
+
+                rate = verticalOffset * 1f / distance * 1f
+                Log.d("way", "rate: $rate, $verticalOffset, $distance")
+
+
+                doMoveAndScale(mIvBack, -1, rate)
+                doMoveAndScale(mIvFavorite, -1, rate)
+                doMoveAndScale(mIvShare, -1, rate)
+                doMoveAndScale(mTvMatchCurrentTime, -1, rate)
+                doMoveAndScale(mTvHostScore, -1, rate)
+                doMoveAndScale(mTvGuestScore, -1, rate)
+                doMoveAndScale(mIvHost, resultW, rate)
+                doMoveAndScale(mIvGuest, resultW, rate)
+
 
             }
         }
     }
 
-    private fun doScale(view: View, from: Float, to: Float, rate: Float) {
-        val s = from + (from - to) * rate
-        view.scaleX = s
-        view.scaleY = s
+    private val dp10InPx = ConvertUtils.dp2px(10f)
+    /**
+     * 生成各view移动的路径
+     */
+    private fun generateMovePath(view: View) {
+        val path = Path()
+        path.moveTo(view.x, view.y)     //起点
+
+        when (view.id) {
+            R.id.iv_back,
+            R.id.iv_share,
+            R.id.iv_favorite,
+            R.id.tv_match_current_time -> {
+                path.lineTo(view.x, mWholeView.height.toFloat() - mWholeView.minHeight / 2 - view.height / 2)
+            }
+
+            R.id.iv_host -> {
+                val resultW = ConvertUtils.dp2px(32f)
+
+                //根据 mTvHostScore mIvHost之间的间距为10dp, 得到mIvHost坐标
+                val resultX = mWholeView.width / 2 - mTvMatchCurrentTime.width / 2 -dp10InPx - mTvHostScore.width - view.width /2 - resultW / 2 - dp10InPx
+
+                path.lineTo(resultX.toFloat(), mWholeView.height.toFloat() - mWholeView.minHeight / 2 - view.height / 2)
+            }
+
+            R.id.iv_guest -> {
+                val resultW = ConvertUtils.dp2px(32f)
+                val delta = dp10InPx - resultW / 2
+
+                val resultX = mWholeView.width / 2 + mTvMatchCurrentTime.width / 2 + dp10InPx + mTvGuestScore.width - (view.width - resultW) / 2 + dp10InPx
+
+                path.lineTo(resultX.toFloat(), mWholeView.height.toFloat() - mWholeView.minHeight / 2 - view.height / 2)
+            }
+
+            R.id.tv_host_score-> {
+                val resultX = mWholeView.width / 2 - mTvMatchCurrentTime.width / 2  - dp10InPx - mTvHostScore.width
+                path.lineTo(resultX.toFloat(), mWholeView.height.toFloat() - mWholeView.minHeight / 2 - view.height / 2)
+            }
+
+            R.id.tv_guest_score -> {
+                val resultX = mWholeView.width / 2 + mTvMatchCurrentTime.width / 2 + dp10InPx
+                path.lineTo(resultX.toFloat(), mWholeView.height.toFloat() - mWholeView.minHeight / 2 - view.height / 2)
+            }
+        }
+
+        if (!path.isEmpty) {
+            mPaths[view] = path
+        }
+    }
+
+    private val pointEvaluator = PointEvaluator()
+
+    /**
+     * @param resultW 最终收缩时view的宽度 <0 无缩放， > 0 缩放
+     */
+    private fun doMoveAndScale(view: View, resultW: Int, rate: Float) {
+
+        if (resultW > 0) {  //做缩放操作
+
+            val deltaW = view.width - resultW
+            val scaleDelta = deltaW * 1.0f / view.width * abs(rate)
+
+            view.scaleX = 1 - scaleDelta
+            view.scaleY = 1 - scaleDelta
+        }
+
+        Log.d("way", "W: ${view.width}, H: ${view.height}, X: ${view.x}, Y: ${view.y}, top: ${view.top}")
+        val originPoint = mOriginXY[view]
+        val pointF = getHostIconPathPoints(view, rate)
+        view.x = pointF.x
+        view.y = pointF.y
+
+        Log.d("way", "doMoveAndScale x:${pointF.x}, y:${pointF.y}, originX: ${originPoint!!.x} originY: ${originPoint!!.y}}, ")
+        Log.d("way", "中线：ivBackY: ${mIvBack.y + mIvBack.height / 2} mIvHostY: ${view.y}")
 
     }
 
+    private fun doMove(view: View, rate: Float) {
+
+
+    }
+
+
+    private fun getHostIconPathPoints(view: View, rate: Float): PointF {
+
+        val pathMeasure = PathMeasure(mPaths[view], false)
+        val pathPoints = floatArrayOf(0f, 1f)
+        val tans = floatArrayOf(1f, 1f)
+
+        pathMeasure.getPosTan(pathMeasure.length * abs(rate), pathPoints, tans)
+
+        return PointF(pathPoints[0], pathPoints[1])
+    }
+
+    inner class PointEvaluator : TypeEvaluator<PointF> {
+        private val mPoint: PointF? = null
+        override fun evaluate(fraction: Float, startValue: PointF?, endValue: PointF?): PointF {
+            val x = startValue!!.x + fraction * (endValue!!.x - startValue!!.x)
+            val y = startValue!!.y + fraction * (endValue!!.y - startValue!!.y)
+
+            if (mPoint != null) {
+                mPoint.set(x, y)
+                return mPoint
+            } else {
+                return PointF(x, y)
+            }
+        }
+    }
 
 
     //    /**
