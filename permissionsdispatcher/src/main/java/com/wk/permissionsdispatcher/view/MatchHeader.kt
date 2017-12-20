@@ -5,7 +5,6 @@ import android.content.Context
 import android.graphics.Path
 import android.graphics.PathMeasure
 import android.graphics.PointF
-import android.graphics.Rect
 import android.support.constraint.ConstraintLayout
 import android.support.design.widget.AppBarLayout
 import android.util.AttributeSet
@@ -15,7 +14,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.blankj.utilcode.util.ConvertUtils
 import com.wk.permissionsdispatcher.R
-import kotlinx.android.synthetic.main.fb_match_detail_header.view.*
 import kotlin.math.abs
 
 /**
@@ -82,7 +80,13 @@ class MatchHeader(context: Context, attrs: AttributeSet) : AppBarLayout(context,
 
     private val mOriginXY = mutableMapOf<View, PointF>()
     private val mPaths = mutableMapOf<View, Path>()
+    private val mFadeViews = mutableListOf<View>()
     private fun initData() {
+
+//        mFadeViews.add(mTvHostName)
+//        mFadeViews.add(mTvGuestName)
+//        mFadeViews.add(mTvHostRank)
+//        mFadeViews.add(mTvGuestRank)
 
         post {
 
@@ -94,7 +98,6 @@ class MatchHeader(context: Context, attrs: AttributeSet) : AppBarLayout(context,
 
 
             //主队图标
-            val originW = mIvHost.width
             val resultW = ConvertUtils.dp2px(32f)
 
 
@@ -117,21 +120,28 @@ class MatchHeader(context: Context, attrs: AttributeSet) : AppBarLayout(context,
                 Log.d("way", "rate: $rate, $verticalOffset, $distance")
 
 
-                doMoveAndScale(mIvBack, -1, rate)
-                doMoveAndScale(mIvFavorite, -1, rate)
-                doMoveAndScale(mIvShare, -1, rate)
-                doMoveAndScale(mTvMatchCurrentTime, -1, rate)
-                doMoveAndScale(mTvHostScore, -1, rate)
-                doMoveAndScale(mTvGuestScore, -1, rate)
+                doMove(mIvBack, rate)
+                doMove(mIvFavorite, rate)
+                doMove(mIvShare, rate)
+                doMove(mTvMatchCurrentTime, rate)
+                doTextMoveAndScale(mTvHostScore, rate)
+                doTextMoveAndScale(mTvGuestScore, rate)
                 doMoveAndScale(mIvHost, resultW, rate)
                 doMoveAndScale(mIvGuest, resultW, rate)
 
-
+                (0..(mWholeView.childCount - 1)).forEach{
+                    val childAt = mWholeView.getChildAt(it)
+                    if (!mPaths.containsKey(childAt)) {
+                        doFade(childAt, rate)
+                    }
+                }
             }
         }
     }
 
+
     private val dp10InPx = ConvertUtils.dp2px(10f)
+
     /**
      * 生成各view移动的路径
      */
@@ -151,22 +161,21 @@ class MatchHeader(context: Context, attrs: AttributeSet) : AppBarLayout(context,
                 val resultW = ConvertUtils.dp2px(32f)
 
                 //根据 mTvHostScore mIvHost之间的间距为10dp, 得到mIvHost坐标
-                val resultX = mWholeView.width / 2 - mTvMatchCurrentTime.width / 2 -dp10InPx - mTvHostScore.width - view.width /2 - resultW / 2 - dp10InPx
+                val resultX = mWholeView.width / 2 - mTvMatchCurrentTime.width / 2 - dp10InPx - mTvHostScore.width - view.width / 2 - resultW / 2 - dp10InPx
 
                 path.lineTo(resultX.toFloat(), mWholeView.height.toFloat() - mWholeView.minHeight / 2 - view.height / 2)
             }
 
             R.id.iv_guest -> {
                 val resultW = ConvertUtils.dp2px(32f)
-                val delta = dp10InPx - resultW / 2
-
+                //根据 mTvGuestScore mIvGuest之间的间距为10dp, mIvGuest之间的间距为10dp
                 val resultX = mWholeView.width / 2 + mTvMatchCurrentTime.width / 2 + dp10InPx + mTvGuestScore.width - (view.width - resultW) / 2 + dp10InPx
 
                 path.lineTo(resultX.toFloat(), mWholeView.height.toFloat() - mWholeView.minHeight / 2 - view.height / 2)
             }
 
-            R.id.tv_host_score-> {
-                val resultX = mWholeView.width / 2 - mTvMatchCurrentTime.width / 2  - dp10InPx - mTvHostScore.width
+            R.id.tv_host_score -> {
+                val resultX = mWholeView.width / 2 - mTvMatchCurrentTime.width / 2 - dp10InPx - mTvHostScore.width
                 path.lineTo(resultX.toFloat(), mWholeView.height.toFloat() - mWholeView.minHeight / 2 - view.height / 2)
             }
 
@@ -181,39 +190,58 @@ class MatchHeader(context: Context, attrs: AttributeSet) : AppBarLayout(context,
         }
     }
 
-    private val pointEvaluator = PointEvaluator()
+
+
+    private fun doMoveAndScale(view: View, resultW: Int, rate: Float) {
+        doTeamIconScale(view, resultW, rate)
+        doMove(view, rate)
+    }
 
     /**
-     * @param resultW 最终收缩时view的宽度 <0 无缩放， > 0 缩放
+     * 主客队图标在移动路线上的缩放
      */
-    private fun doMoveAndScale(view: View, resultW: Int, rate: Float) {
+    private fun doTeamIconScale(view: View, resultW: Int, rate: Float) {
+        val deltaW = view.width - resultW
+        val scaleDelta = deltaW * 1.0f / view.width * abs(rate)
 
-        if (resultW > 0) {  //做缩放操作
+        view.scaleX = 1 - scaleDelta
+        view.scaleY = 1 - scaleDelta
+    }
 
-            val deltaW = view.width - resultW
-            val scaleDelta = deltaW * 1.0f / view.width * abs(rate)
+    /**
+     * 比分的文字缩放，按设计图35dp --> 22dp
+     */
+    private fun doTextMoveAndScale(view: TextView, rate: Float) {
+        doMove(view, rate)
 
-            view.scaleX = 1 - scaleDelta
-            view.scaleY = 1 - scaleDelta
-        }
+        val deltaW = 35 - 22
+        val scaleDelta = deltaW * 1.0f / 35 * abs(rate)
 
-        Log.d("way", "W: ${view.width}, H: ${view.height}, X: ${view.x}, Y: ${view.y}, top: ${view.top}")
-        val originPoint = mOriginXY[view]
+        view.scaleX = 1 - scaleDelta
+        view.scaleY = 1 - scaleDelta
+    }
+
+    /**
+     * 淡入淡出
+     */
+    private fun doFade(view: View, rate: Float) {
+
+        Log.d("way", "fade: $rate")
+        view.alpha = 1 + rate
+    }
+
+    /**
+     * 移动
+     */
+    private fun doMove(view: View, rate: Float) {
         val pointF = getHostIconPathPoints(view, rate)
         view.x = pointF.x
         view.y = pointF.y
-
-        Log.d("way", "doMoveAndScale x:${pointF.x}, y:${pointF.y}, originX: ${originPoint!!.x} originY: ${originPoint!!.y}}, ")
-        Log.d("way", "中线：ivBackY: ${mIvBack.y + mIvBack.height / 2} mIvHostY: ${view.y}")
-
     }
 
-    private fun doMove(view: View, rate: Float) {
-
-
-    }
-
-
+    /**
+     * 获取移动路线上的各点
+     */
     private fun getHostIconPathPoints(view: View, rate: Float): PointF {
 
         val pathMeasure = PathMeasure(mPaths[view], false)
