@@ -17,7 +17,7 @@ import com.wk.permissionsdispatcher.R
 import kotlin.math.abs
 
 /**
- * Created by lifan on 2016/5/18.
+ * 数据中心 header
  */
 class MatchHeader(context: Context, attrs: AttributeSet) : AppBarLayout(context, attrs) {
     private lateinit var mWholeView: ConstraintLayout
@@ -40,13 +40,6 @@ class MatchHeader(context: Context, attrs: AttributeSet) : AppBarLayout(context,
     private lateinit var mTvGuestRank: TextView
 
 
-    init {
-//        LayoutInflater.from(context).inflate(R.layout.fb_match_detail_header, this, true)
-//        LayoutInflater.from(context).inflate(R.layout.fb_data_header_tab, this, true)
-
-//        initViews()
-
-    }
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -267,60 +260,5 @@ class MatchHeader(context: Context, attrs: AttributeSet) : AppBarLayout(context,
             }
         }
     }
-
-
-    //    /**
-    //     * @param var  能否滑出的最大高度, appbarLayout与标题栏的距离
-    //     * @param var1 Math.abs(verticalOffset) appbarLayout垂直方向上偏移的绝对值
-    //     * @param var2 从完全展开到完全收缩的比率 范围为：1 --> 0
-    //     */
-    //    protected void onHeaderOffsetChanged(int var, int var1, float var2) {
-    //
-    //
-    //        initXY();
-    //
-    //        back_img.setY((float) var1);
-    //        title.setY((float) var1);
-    //
-    //        float iconS = yLen[0] - (var1 * perDpi * 7f) / (float) var;
-    //        hostIcon.setY(iconS + (float) (var1 / 1.1));
-    //        guestIcon.setY(iconS + (float) (var1 / 1.1));
-    //
-    //        float scoreS = yLen[1] - (var1 * perDpi * 7.7f) / (float) var;
-    //        hostScore.setY(scoreS + (float) (var1 / 1.15));
-    //        guestScore.setY(scoreS + (float) (var1 / 1.15));
-    //
-    //
-    //        float var3 = 1.0F - 0.5F * (1.0F - var2);
-    //        hostIcon.setScaleX(var3);
-    //        hostIcon.setScaleY(var3);
-    //        guestIcon.setScaleX(var3);
-    //        guestIcon.setScaleY(var3);
-    //
-    //        hostName.setX(xLen[0] - (float) (var1 * 0.6));
-    //        hostRank.setX(xLen[1] - (float) (var1 * 0.6));
-    //        guestName.setX(xLen[2] + (float) (var1 * 0.6));
-    //        guestRank.setX(xLen[3] + (float) (var1 * 0.6));
-    //
-    //        hostScore.setX(xLen[4] - ((1f - var2) * perDpi * 4f));
-    //        guestScore.setX(xLen[5] + ((1f - var2) * perDpi * 4f));
-    //        hostScore.setTextSize(32 - ((1f - var2) * 8));
-    //        guestScore.setTextSize(32 - ((1f - var2) * 8));
-    //        /**
-    //         * 设置控件透明度
-    //         */
-    //        hostName.setAlpha(((perDpi * 10 - var1) / (perDpi * 10)));
-    //        hostRank.setAlpha(((perDpi * 10 - var1) / (perDpi * 10)));
-    //        guestName.setAlpha(((perDpi * 10 - var1) / (perDpi * 10)));
-    //        guestRank.setAlpha(((perDpi * 10 - var1) / (perDpi * 10)));
-    //
-    //        num.setAlpha(((perDpi * 2 - var1) / (perDpi * 2)));
-    //        beginTime.setAlpha(((perDpi * 3.5f - var1) / (perDpi * 3.5f)));
-    //        timeRL.setAlpha(((perDpi * 10 - var1) / (perDpi * 10)));
-    //        halfScore.setAlpha(((perDpi * 13 - var1) / (perDpi * 13)));
-    //        timeRLTop.setAlpha(((perDpi * 13 - var1) / (perDpi * 13)));
-    //
-    //    }
-
 
 }

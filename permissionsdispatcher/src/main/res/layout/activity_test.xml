@@ -21,12 +21,7 @@
             layout="@layout/fb_match_detail_header"
             />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:visibility="visible"
-            tools:visibility="visible"
-            android:background="@color/white"/>
+
 
         <com.flyco.tablayout.CommonTabLayout
             android:id="@+id/commonTabLayout"
@@ -45,7 +40,7 @@
             />
 
     </com.wk.permissionsdispatcher.view.MatchHeader>
-    >
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler"

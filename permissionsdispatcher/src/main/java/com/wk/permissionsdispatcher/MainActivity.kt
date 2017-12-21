@@ -1,5 +1,8 @@
 package com.wk.permissionsdispatcher
 
+import android.animation.Keyframe
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
@@ -23,6 +26,13 @@ class MainActivity : AppCompatActivity() {
             GlideApp.with(this).load(imagePath).placeholder(R.mipmap.ic_launcher_round).circleCrop().into(mIv)
         }
 
+        val keyframe = Keyframe.ofFloat(0f, 0f)
+        val keyframe1 = Keyframe.ofFloat(0.5f, 100f)
+        val keyframe2 = Keyframe.ofFloat(1f, 80f)
+
+        val valuesHolder = PropertyValuesHolder.ofKeyframe("progress", keyframe, keyframe1, keyframe2)
+        ObjectAnimator.ofPropertyValuesHolder(mBtnLoad, valuesHolder)
+                .start()
 
     }
 
