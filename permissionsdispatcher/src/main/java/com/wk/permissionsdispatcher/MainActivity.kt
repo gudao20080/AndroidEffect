@@ -31,8 +31,8 @@ class MainActivity : AppCompatActivity() {
         val keyframe2 = Keyframe.ofFloat(1f, 80f)
 
         val valuesHolder = PropertyValuesHolder.ofKeyframe("progress", keyframe, keyframe1, keyframe2)
-        ObjectAnimator.ofPropertyValuesHolder(mBtnLoad, valuesHolder)
-                .start()
+//        ObjectAnimator.ofPropertyValuesHolder(mBtnLoad, valuesHolder)
+//                .start()
 
     }
 

@@ -6,7 +6,7 @@ android {
     compileSdkVersion 26
 
 
-
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.wk.permissionsdispatcher"
         minSdkVersion 15
@@ -28,13 +28,12 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    implementation 'com.android.support:support-v4:26.1.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+//    testImplementation 'junit:junit:4.12'
+//    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+//    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation "com.android.support:appcompat-v7:$supportVersion"
     implementation "com.android.support:design:$supportVersion"
     implementation "com.android.support:recyclerview-v7:$supportVersion"
@@ -42,15 +41,15 @@ dependencies {
         exclude group: 'com.android.support'
     }
     kapt 'com.github.bumptech.glide:compiler:4.4.0'
-
     implementation 'com.jakewharton:kotterknife:0.1.0-SNAPSHOT'
-    implementation("com.github.hotchemi:permissionsdispatcher:2.1.0") {
+    implementation('com.github.hotchemi:permissionsdispatcher:2.1.0') {
         // if you don't use android.app.Fragment you can exclude support for them
-        exclude module: "support-v13"
+        exclude group: 'com.android.support'
     }
     kapt "com.github.hotchemi:permissionsdispatcher-processor:2.1.0"
     implementation 'com.lzy.widget:imagepicker:0.6.1'
     implementation dependLibs.BaseRecyclerViewAdapterHelper
     implementation dependLibs.FlycoTabLayout
     implementation dependLibs.AndroidUtilCode
+    implementation project(':mylibrary')
 }

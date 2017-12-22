@@ -1,1 +1,1 @@
-include ':ImmersiveMode', ':permissionsdispatcher'
+include ':ImmersiveMode', ':permissionsdispatcher', ':mylibrary'
